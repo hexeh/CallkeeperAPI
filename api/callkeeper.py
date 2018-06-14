@@ -40,7 +40,6 @@ class CallKeeper:
 			sys.exit(error_message)
 
 		# Checking paid period
-
 		payment_date = datetime.datetime.strptime(self.user.get('paid_till')[:-6], '%Y-%m-%dT%H:%M:%S')
 		if payment_date <= (datetime.datetime.now() + datetime.timedelta(days = 2)):
 			print('\033[1;33;40mPaid period for this account is about to expire. Expiration date: {0!r}\033[0m'.format(payment_date.strftime('%d %B %Y')))
