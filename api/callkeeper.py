@@ -33,7 +33,7 @@ class CallKeeper:
 		# Validating API-key
 		touch_request = requests.get('{0!s}getUserInfo?api_key={1!s}'.format(self.url, self.token))
 		if touch_request.status_code == 200:
-			self.user = json.loads(touch_request.text)
+			self.user = json.loads(touch_request.text)[0]
 		else:
 			error_info = json.loads(touch_request.text)
 			error_message = 'Failed to authentificate key \033[1;32;40m{0!r}\033[0m with error: \033[1;31;40m{1!s}\033[0m'.format(self.token, error_info[0]['reason'])
@@ -73,7 +73,12 @@ class CallKeeper:
 			'date[to]': str(dateEnd)
 		}
 		if len(statuses) > 0:
-			query['statuses'] = ','.join(statuses)
+			i = 0
+			combined = []
+			while i < len(statuses):
+				combined.append('/'.join(statuses[i:i+2]))
+				i += 2
+			query['statuses'] = ','.join(combined)
 			cmd = 'getCallsByStatus'
 		query = urlencode(query)
 		req = requests.get('{0!s}{1!s}?{2!s}'.format(self.url, cmd, query))
@@ -84,3 +89,4 @@ class CallKeeper:
 			error_info = json.loads(req.text)
 			error_message = 'Failed to complete request with error: \033[1;31;40m{2!s}\033[0m'.format(error_info[0]['reason'])
 			sys.exit(error_message)
+			
