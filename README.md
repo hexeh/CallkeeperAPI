@@ -1,5 +1,5 @@
 # CallkeeperAPI
-Simple Python wrapper for stats methods in Callkeeper API
+Simple Python wrapper for stats methods in [Callkeeper API](http://api.callkeeper.ru/getDoc)
 
 ## Example
 
